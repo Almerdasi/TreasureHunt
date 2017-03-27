@@ -1,12 +1,18 @@
 package com.rit.se.treasurehuntvuz;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class StartGameActivity extends AppCompatActivity {
 
@@ -111,6 +117,31 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void onFileButtonClick(Button fileButton) {
+        TextView tv = (TextView)findViewById(R.id.textView);
+
+        File dir = Environment.getExternalStorageDirectory();
+
+        File file = new File(dir,"text.txt");
+        if(file.exists())   // check if file exist
+        {
+            String text = new String();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                line = br.readLine();
+                tv.setText(line);
+
+            }
+            catch (IOException e) {
+                tv.setText(e.toString());
+            }
+
+        }
+        else
+        {
+            tv.setText("Sorry file doesn't exist!!");
+        }
 
     }
 
